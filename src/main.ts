@@ -57,8 +57,8 @@ class Scheduler {
         });
     }
     public initialize() {
-        if (!memory.processes) {
-            memory.processes = {};
+        if (!Memory.processes) {
+            Memory.processes = {};
             for (var j = 1; j < 21; j++) {
                 this.spawnProcess(new Process(j, getRandomIntInclusive(0, 3)));
             }
@@ -73,11 +73,11 @@ class Scheduler {
     }
 
     public readFromMemory() {
-        this._processes == memory.processes;
+        this._processes == Memory.processes;
     }
 
     public writeToMemory() {
-        memory.processes == this._processes;
+        Memory.processes == this._processes;
     }
 
     public toString() {

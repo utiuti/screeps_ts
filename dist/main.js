@@ -43,8 +43,8 @@ var Scheduler = /** @class */ (function () {
         });
     };
     Scheduler.prototype.initialize = function () {
-        if (!memory.processes) {
-            memory.processes = {};
+        if (!Memory.processes) {
+            Memory.processes = {};
             for (var j = 1; j < 21; j++) {
                 this.spawnProcess(new Process(j, getRandomIntInclusive(0, 3)));
             }
@@ -57,10 +57,10 @@ var Scheduler = /** @class */ (function () {
         return this._processes[Math.floor(Math.random() * this._processes.length)];
     };
     Scheduler.prototype.readFromMemory = function () {
-        this._processes == memory.processes;
+        this._processes == Memory.processes;
     };
     Scheduler.prototype.writeToMemory = function () {
-        memory.processes == this._processes;
+        Memory.processes == this._processes;
     };
     Scheduler.prototype.toString = function () {
         this._processes.forEach(function (x) {
