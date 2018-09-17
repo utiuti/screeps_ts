@@ -58,15 +58,14 @@ class Scheduler {
         });
     }
     public initialize() {
-        if (!Memory.processes) {
-            console.log("Initialise Process Memory");
-            Memory.processes = {};
-            for (var j = 1; j < 21; j++) {
-                console.log("Initialise Processes");
-                this.spawnProcess(new Process(j, getRandomIntInclusive(0, 3)));
-            }
-            this.writeToMemory();
+        console.log("Initialise Process Memory");
+        Memory.processes = {};
+        for (var j = 1; j < 21; j++) {
+            console.log("Initialise Processes");
+            this.spawnProcess(new Process(j, getRandomIntInclusive(0, 3)));
         }
+        this.writeToMemory();
+
     }
     public setSleepTime() {
         this.getRandomProcess().sleep = getRandomIntInclusive(0, 3);
@@ -77,6 +76,7 @@ class Scheduler {
     }
 
     public readFromMemory() {
+        if (!Memory.processes) this.initialize();
         this._processes = Memory.processes;
     }
 
@@ -137,7 +137,7 @@ p.initialize();
 p.readFromMemory();
 // p.run();
 p.sortByLastRun();
-//p.setSleepTime();
+p.setSleepTime();
 p.writeToMemory();
 
 
