@@ -57,8 +57,11 @@ class Scheduler {
         });
     }
     public initialize() {
-        for (var j = 1; j < 21; j++) {
-            this.spawnProcess(new Process(j, getRandomIntInclusive(0, 3)));
+        if (!memory.processes) {
+            memory.processes = {};
+            for (var j = 1; j < 21; j++) {
+                this.spawnProcess(new Process(j, getRandomIntInclusive(0, 3)));
+            }
         }
     }
     public setSleepTime() {
@@ -67,6 +70,14 @@ class Scheduler {
 
     public getRandomProcess() {
         return this._processes[Math.floor(Math.random() * this._processes.length)]
+    }
+
+    public readFromMemory() {
+        this._processes == memory.processes;
+    }
+
+    public writeToMemory() {
+        memory.processes == this._processes;
     }
 
     public toString() {
@@ -95,7 +106,7 @@ class Process {
     }
     run() {
         let runtime = getRandomIntInclusive(1, 100);
-        this.lastRun = i || 0;
+        this.lastRun = Game.time || 0;
         return runtime;
     }
     toString() {
@@ -121,10 +132,12 @@ let p = Scheduler.getInstance();
 p.initialize();
 
 // Simuliert 100 Programmdurchläufe
-for (var i = 0; i < 100; i++) {
-    p.run();
-    p.sortByLastRun();
-    p.setSleepTime();
-}
+p.readFromMemory;
+p.run();
+p.sortByLastRun();
+p.setSleepTime();
+p.writeToMemory;
+
+
 p.toString();
 console.log(`Counter: ${numberProcessesRun} NumberSleeps: ${numberSleeps}`);

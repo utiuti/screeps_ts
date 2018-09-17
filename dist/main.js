@@ -43,8 +43,11 @@ var Scheduler = /** @class */ (function () {
         });
     };
     Scheduler.prototype.initialize = function () {
-        for (var j = 1; j < 21; j++) {
-            this.spawnProcess(new Process(j, getRandomIntInclusive(0, 3)));
+        if (!memory.processes) {
+            memory.processes = {};
+            for (var j = 1; j < 21; j++) {
+                this.spawnProcess(new Process(j, getRandomIntInclusive(0, 3)));
+            }
         }
     };
     Scheduler.prototype.setSleepTime = function () {
@@ -52,6 +55,12 @@ var Scheduler = /** @class */ (function () {
     };
     Scheduler.prototype.getRandomProcess = function () {
         return this._processes[Math.floor(Math.random() * this._processes.length)];
+    };
+    Scheduler.prototype.readFromMemory = function () {
+        this._processes == memory.processes;
+    };
+    Scheduler.prototype.writeToMemory = function () {
+        memory.processes == this._processes;
     };
     Scheduler.prototype.toString = function () {
         this._processes.forEach(function (x) {
@@ -75,7 +84,7 @@ var Process = /** @class */ (function () {
     }
     Process.prototype.run = function () {
         var runtime = getRandomIntInclusive(1, 100);
-        this.lastRun = i || 0;
+        this.lastRun = Game.time || 0;
         return runtime;
     };
     Process.prototype.toString = function () {
@@ -97,11 +106,11 @@ var p = Scheduler.getInstance();
 // ca 20 Prozesse initialisieren
 p.initialize();
 // Simuliert 100 Programmdurchläufe
-for (var i = 0; i < 100; i++) {
-    p.run();
-    p.sortByLastRun();
-    p.setSleepTime();
-}
+p.readFromMemory;
+p.run();
+p.sortByLastRun();
+p.setSleepTime();
+p.writeToMemory;
 p.toString();
 console.log("Counter: " + numberProcessesRun + " NumberSleeps: " + numberSleeps);
 //# sourceMappingURL=main.js.map
