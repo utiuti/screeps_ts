@@ -39,7 +39,6 @@ class Scheduler {
             else if (isRunningFor < limit) {
 
                 numberProcessesRun += 1;
-                console.log("X: " + x);
                 isRunningFor += x.run();
 
             }
@@ -132,14 +131,12 @@ function getRandomIntInclusive(min, max) {
 // Programm Start
 let p = Scheduler.getInstance();
 
-p.initialize();
-
 p.readFromMemory();
 // p.run();
 p.sortByLastRun();
 p.setSleepTime();
 p.writeToMemory();
 
-
+console.log("---------------------------");
 p.toString();
 console.log(`Counter: ${numberProcessesRun} NumberSleeps: ${numberSleeps}`);

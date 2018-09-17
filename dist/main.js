@@ -28,7 +28,6 @@ var Scheduler = /** @class */ (function () {
             }
             else if (isRunningFor < limit) {
                 numberProcessesRun += 1;
-                console.log("X: " + x);
                 isRunningFor += x.run();
             }
         });
@@ -107,12 +106,12 @@ function getRandomIntInclusive(min, max) {
 }
 // Programm Start
 var p = Scheduler.getInstance();
-p.initialize();
 p.readFromMemory();
 // p.run();
 p.sortByLastRun();
 p.setSleepTime();
 p.writeToMemory();
+console.log("---------------------------");
 p.toString();
 console.log("Counter: " + numberProcessesRun + " NumberSleeps: " + numberSleeps);
 //# sourceMappingURL=main.js.map
