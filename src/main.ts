@@ -27,7 +27,7 @@ class Scheduler {
 
     public run() {
         let isRunningFor = 0;
-        let limit = 300;
+        let limit = Game.cpu.limit;
 
         this._processes.forEach(x => {
 
@@ -108,7 +108,7 @@ class Process {
         this.sleep = 0;
     }
     run() {
-        let runtime = getRandomIntInclusive(1, 100);
+        let runtime = getRandomIntInclusive(1, 4);
         this.lastRun = Game.time || 0;
         return runtime;
     }

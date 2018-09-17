@@ -20,7 +20,7 @@ var Scheduler = /** @class */ (function () {
     };
     Scheduler.prototype.run = function () {
         var isRunningFor = 0;
-        var limit = 300;
+        var limit = Game.cpu.limit;
         this._processes.forEach(function (x) {
             if (x.sleep > 0) {
                 x.sleep -= 1;
@@ -86,7 +86,7 @@ var Process = /** @class */ (function () {
         this.sleep = 0;
     }
     Process.prototype.run = function () {
-        var runtime = getRandomIntInclusive(1, 100);
+        var runtime = getRandomIntInclusive(1, 4);
         this.lastRun = Game.time || 0;
         return runtime;
     };
