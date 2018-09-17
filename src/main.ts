@@ -60,7 +60,7 @@ class Scheduler {
     public initialize() {
         if (!Memory.processes) {
             console.log("Initialise Process Memory");
-            Memory.processes = [];
+            Memory.processes = {};
             for (var j = 1; j < 21; j++) {
                 console.log("Initialise Processes");
                 this.spawnProcess(new Process(j, getRandomIntInclusive(0, 3)));
