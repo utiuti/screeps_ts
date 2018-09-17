@@ -135,9 +135,8 @@ let p = Scheduler.getInstance();
 // ca 20 Prozesse initialisieren
 p.initialize();
 
-// Simuliert 100 Programmdurchläufe
 p.readFromMemory();
-p.run();
+// p.run();
 p.sortByLastRun();
 // p.setSleepTime();
 p.writeToMemory();
