@@ -39,6 +39,7 @@ class Scheduler {
             else if (isRunningFor < limit) {
 
                 numberProcessesRun += 1;
+                console.log("X: " + x);
                 isRunningFor += x.run();
 
             }

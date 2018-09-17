@@ -28,6 +28,7 @@ var Scheduler = /** @class */ (function () {
             }
             else if (isRunningFor < limit) {
                 numberProcessesRun += 1;
+                console.log("X: " + x);
                 isRunningFor += x.run();
             }
         });
