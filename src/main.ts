@@ -117,7 +117,7 @@ function getRandomIntInclusive(min, max) {
 // Programm Start
 let p = Scheduler.getInstance();
 
-// ca. 20 Prozesse initialisieren
+// ca 20 Prozesse initialisieren
 p.initialize();
 
 // Simuliert 100 Programmdurchläufe
