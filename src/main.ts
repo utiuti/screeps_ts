@@ -64,8 +64,8 @@ class Scheduler {
             for (var j = 1; j < 21; j++) {
                 console.log("Initialise Processes");
                 this.spawnProcess(new Process(j, getRandomIntInclusive(0, 3)));
-                this.writeToMemory();
             }
+            this.writeToMemory();
         }
     }
     public setSleepTime() {
@@ -132,13 +132,12 @@ function getRandomIntInclusive(min, max) {
 // Programm Start
 let p = Scheduler.getInstance();
 
-// ca 20 Prozesse initialisieren
 p.initialize();
 
 p.readFromMemory();
 // p.run();
 p.sortByLastRun();
-// p.setSleepTime();
+//p.setSleepTime();
 p.writeToMemory();
 
 
