@@ -58,8 +58,10 @@ class Scheduler {
     }
     public initialize() {
         if (!Memory.processes) {
+            console.log("Initialise Process Memory");
             Memory.processes = {};
             for (var j = 1; j < 21; j++) {
+                console.log("Initialise Processes");
                 this.spawnProcess(new Process(j, getRandomIntInclusive(0, 3)));
             }
         }
@@ -73,11 +75,11 @@ class Scheduler {
     }
 
     public readFromMemory() {
-        this._processes == Memory.processes;
+        this._processes = Memory.processes;
     }
 
     public writeToMemory() {
-        Memory.processes == this._processes;
+        Memory.processes = this._processes;
     }
 
     public toString() {
@@ -132,11 +134,11 @@ let p = Scheduler.getInstance();
 p.initialize();
 
 // Simuliert 100 Programmdurchläufe
-p.readFromMemory;
+p.readFromMemory();
 p.run();
 p.sortByLastRun();
-p.setSleepTime();
-p.writeToMemory;
+// p.setSleepTime();
+p.writeToMemory();
 
 
 p.toString();
