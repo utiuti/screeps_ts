@@ -45,7 +45,7 @@ var Scheduler = /** @class */ (function () {
     Scheduler.prototype.initialize = function () {
         console.log("Initialise Process Memory");
         Memory.processes = {};
-        for (var j = 1; j < 21; j++) {
+        for (var j = 1; j < 7; j++) {
             console.log("Initialise Processes");
             this.spawnProcess(new Process(j, getRandomIntInclusive(0, 3)));
         }
