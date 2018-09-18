@@ -44,7 +44,7 @@ var Scheduler = /** @class */ (function () {
     };
     Scheduler.prototype.initialize = function () {
         console.log("Initialise Process Memory");
-        Memory.processes = {};
+        Memory.processes = [];
         for (var j = 1; j < 7; j++) {
             console.log("Initialise Processes");
             this.spawnProcess(new Process(j, getRandomIntInclusive(0, 3)));
@@ -59,7 +59,7 @@ var Scheduler = /** @class */ (function () {
     };
     Scheduler.prototype.readFromMemory = function () {
         if (!Memory.processes)
-            this.initialize();
+            this.initialize(); //TODO This does not work
         this._processes = Memory.processes;
     };
     Scheduler.prototype.writeToMemory = function () {
@@ -107,7 +107,7 @@ function getRandomIntInclusive(min, max) {
 // Programm Start
 var p = Scheduler.getInstance();
 p.readFromMemory();
-// p.run();
+p.run();
 p.sortByLastRun();
 p.setSleepTime();
 p.writeToMemory();

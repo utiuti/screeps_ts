@@ -58,7 +58,7 @@ class Scheduler {
     }
     public initialize() {
         console.log("Initialise Process Memory");
-        Memory.processes = {};
+        Memory.processes = [];
         for (var j = 1; j < 7; j++) {
             console.log("Initialise Processes");
             this.spawnProcess(new Process(j, getRandomIntInclusive(0, 3)));
@@ -75,7 +75,7 @@ class Scheduler {
     }
 
     public readFromMemory() {
-        if (!Memory.processes) this.initialize();
+        if (!Memory.processes) this.initialize(); //TODO This does not work
         this._processes = Memory.processes;
     }
 
@@ -132,7 +132,7 @@ function getRandomIntInclusive(min, max) {
 let p = Scheduler.getInstance();
 
 p.readFromMemory();
-// p.run();
+p.run();
 p.sortByLastRun();
 p.setSleepTime();
 p.writeToMemory();
