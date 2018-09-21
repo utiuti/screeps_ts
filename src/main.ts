@@ -75,6 +75,7 @@ class Scheduler {
     }
 
     public readFromMemory() {
+        console.log("Read Memory. Memory.process exists?: " + Memory.processes);
         if (!Memory.processes) this.initialize(); //TODO This does not work
         this._processes = Memory.processes;
     }

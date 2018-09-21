@@ -58,6 +58,7 @@ var Scheduler = /** @class */ (function () {
         return this._processes[Math.floor(Math.random() * this._processes.length)];
     };
     Scheduler.prototype.readFromMemory = function () {
+        console.log("Read Memory. Memory.process exists?: " + Memory.processes);
         if (!Memory.processes)
             this.initialize(); //TODO This does not work
         this._processes = Memory.processes;
