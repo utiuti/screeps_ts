@@ -22,14 +22,14 @@ class Scheduler {
     }
 
     public spawnProcess(p: Process) {
-        this._processes.push(p)
+        global._processes.push(p)
     }
 
     public run() {
         let isRunningFor = 0;
         let limit = Game.cpu.limit;
 
-        this._processes.forEach(x => {
+        global._processes.forEach(x => {
 
             if (x.sleep > 0) {
                 x.sleep -= 1;
@@ -46,13 +46,13 @@ class Scheduler {
     }
 
     public sortByLastRun() {
-        this._processes.sort(function (a, b) {
+        global._processes.sort(function (a, b) {
             return a.lastRun - b.lastRun;
         });
     }
 
     public sortByPriority() {
-        this._processes.sort(function (a, b) {
+        global._processes.sort(function (a, b) {
             return a.priority - b.priority;
         });
     }
@@ -76,8 +76,8 @@ class Scheduler {
 
     public readFromMemory() {
         console.log("Read Memory. Memory.process exists?: " + Memory.processes);
-        if (!Memory.processes) this.initialize(); //TODO This does not work
-        this._processes = Memory.processes;
+        this.initialize(); //TODO This does not work
+        // this._processes = Memory.processes;
     }
 
     public writeToMemory() {
