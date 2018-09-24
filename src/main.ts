@@ -62,14 +62,14 @@ class Scheduler {
     public initialize() {
 
         if (Memory.processes) {
-            console.log("Get Processes from Memory");
+            console.log('<font color="' + "ffcc00" + '" type="highlight">' + "Get Processes from Memory" + "</font>");
             Memory.processes.forEach(function (x) {
                 this.spawnProcess(new Process(x.thePid, x.priority, x.theTask));
             });
 
         }
         else {
-            console.log("Initialise Processes + Memory");
+            console.log('<font color="' + "ffcc00" + '" type="highlight">' + "Initialise Processes + Memory" + "</font>");
             Memory.processes = [];
             for (var j = 1; j < 7; j++) {
                 this.spawnProcess(new Process(j, getRandomIntInclusive(0, 3)));
