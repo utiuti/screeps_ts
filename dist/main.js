@@ -16,12 +16,14 @@ var Scheduler = /** @class */ (function () {
         return this._instance;
     };
     Scheduler.prototype.spawnProcess = function (p) {
-        this._processes.push(p);
+        global._processes.push(p);
     };
     Scheduler.prototype.run = function () {
         var isRunningFor = 0;
         var limit = Game.cpu.limit;
-        this._processes.forEach(function (x) {
+        if (!global._processes)
+            this.initialize();
+        global._processes.forEach(function (x) {
             if (x.sleep > 0) {
                 x.sleep -= 1;
                 numberSleeps += 1;
@@ -33,12 +35,12 @@ var Scheduler = /** @class */ (function () {
         });
     };
     Scheduler.prototype.sortByLastRun = function () {
-        this._processes.sort(function (a, b) {
+        global._processes.sort(function (a, b) {
             return a.lastRun - b.lastRun;
         });
     };
     Scheduler.prototype.sortByPriority = function () {
-        this._processes.sort(function (a, b) {
+        global._processes.sort(function (a, b) {
             return a.priority - b.priority;
         });
     };
@@ -46,25 +48,25 @@ var Scheduler = /** @class */ (function () {
         console.log("Initialise Process Memory");
         Memory.processes = [];
         for (var j = 1; j < 7; j++) {
-            console.log("Initialise Processes");
+            //console.log("Initialise Processes");
             this.spawnProcess(new Process(j, getRandomIntInclusive(0, 3)));
         }
+        global._processes = this._processes;
         this.writeToMemory();
     };
     Scheduler.prototype.setSleepTime = function () {
         this.getRandomProcess().sleep = getRandomIntInclusive(0, 3);
     };
     Scheduler.prototype.getRandomProcess = function () {
-        return this._processes[Math.floor(Math.random() * this._processes.length)];
+        return global._processes[Math.floor(Math.random() * this._processes.length)];
     };
     Scheduler.prototype.readFromMemory = function () {
-        console.log("Read Memory. Memory.process exists?: " + Memory.processes);
-        if (!Memory.processes)
-            this.initialize(); //TODO This does not work
-        this._processes = Memory.processes;
+        // console.log("Read Memory. Memory.process exists?: " + Memory.processes);
+        // this.initialize(); //TODO This does not work
+        // this._processes = Memory.processes;
     };
     Scheduler.prototype.writeToMemory = function () {
-        Memory.processes = this._processes;
+        Memory.processes = global._processes;
     };
     Scheduler.prototype.toString = function () {
         this._processes.forEach(function (x) {
@@ -107,7 +109,7 @@ function getRandomIntInclusive(min, max) {
 }
 // Programm Start
 var p = Scheduler.getInstance();
-p.readFromMemory();
+//p.readFromMemory();
 p.run();
 p.sortByLastRun();
 p.setSleepTime();

@@ -29,6 +29,7 @@ class Scheduler {
         let isRunningFor = 0;
         let limit = Game.cpu.limit;
 
+        if (!global._processes) this.initialize();
         global._processes.forEach(x => {
 
             if (x.sleep > 0) {
@@ -60,9 +61,10 @@ class Scheduler {
         console.log("Initialise Process Memory");
         Memory.processes = [];
         for (var j = 1; j < 7; j++) {
-            console.log("Initialise Processes");
+            //console.log("Initialise Processes");
             this.spawnProcess(new Process(j, getRandomIntInclusive(0, 3)));
         }
+        global._processes = this._processes;
         this.writeToMemory();
 
     }
@@ -71,17 +73,17 @@ class Scheduler {
     }
 
     public getRandomProcess() {
-        return this._processes[Math.floor(Math.random() * this._processes.length)]
+        return global._processes[Math.floor(Math.random() * this._processes.length)]
     }
 
     public readFromMemory() {
-        console.log("Read Memory. Memory.process exists?: " + Memory.processes);
-        this.initialize(); //TODO This does not work
+        // console.log("Read Memory. Memory.process exists?: " + Memory.processes);
+        // this.initialize(); //TODO This does not work
         // this._processes = Memory.processes;
     }
 
     public writeToMemory() {
-        Memory.processes = this._processes;
+        Memory.processes = global._processes;
     }
 
     public toString() {
@@ -132,7 +134,7 @@ function getRandomIntInclusive(min, max) {
 // Programm Start
 let p = Scheduler.getInstance();
 
-p.readFromMemory();
+//p.readFromMemory();
 p.run();
 p.sortByLastRun();
 p.setSleepTime();
