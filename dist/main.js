@@ -27,8 +27,7 @@ var Scheduler = /** @class */ (function () {
             if (x.sleep > 0) {
                 x.sleep -= 1;
                 numberSleeps += 1;
-            }
-            else if (isRunningFor < limit) {
+            } else if (isRunningFor < limit) {
                 numberProcessesRun += 1;
                 isRunningFor += x.run();
             }
@@ -69,7 +68,7 @@ var Scheduler = /** @class */ (function () {
         Memory.processes = global._processes;
     };
     Scheduler.prototype.toString = function () {
-        this._processes.forEach(function (x) {
+        global._processes.forEach(function (x) {
             console.log("PID: " + ("     " + x.pid).slice(-5) + " Priority: " + x.priority + " Task: " + x.task + " lastRun: " + x.lastRun + " sleepTime: " + x.sleep);
         });
     };
@@ -78,8 +77,12 @@ var Scheduler = /** @class */ (function () {
 }());
 var Process = /** @class */ (function () {
     function Process(thePid, priority, theTask) {
-        if (priority === void 0) { priority = Priority.Middle; }
-        if (theTask === void 0) { theTask = "Task" + getRandomIntInclusive(100, 999); }
+        if (priority === void 0) {
+            priority = Priority.Middle;
+        }
+        if (theTask === void 0) {
+            theTask = "Task" + getRandomIntInclusive(100, 999);
+        }
         this.thePid = thePid;
         this.priority = priority;
         this.theTask = theTask;
@@ -99,9 +102,13 @@ var Process = /** @class */ (function () {
     };
     return Process;
 }());
+
 function PidExists(pid, pArray) {
-    return pArray.filter(function (p) { return p.pid == pid; }).length > 0;
+    return pArray.filter(function (p) {
+        return p.pid == pid;
+    }).length > 0;
 }
+
 function getRandomIntInclusive(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
