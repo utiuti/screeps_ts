@@ -1,3 +1,5 @@
+declare var global: any;
+
 enum Priority {
     VeryHigh = 4,
     High = 3,
@@ -58,11 +60,20 @@ class Scheduler {
         });
     }
     public initialize() {
-        console.log("Initialise Process Memory");
-        Memory.processes = [];
-        for (var j = 1; j < 7; j++) {
-            //console.log("Initialise Processes");
-            this.spawnProcess(new Process(j, getRandomIntInclusive(0, 3)));
+
+        if (Memory.processes) {
+            console.log("Get Processes from Memory");
+            Memory.processes.forEach(function (x) {
+                this.spawnProcess(new Process(x.thePid, x.priority, x.theTask));
+            });
+
+        }
+        else {
+            console.log("Initialise Processes + Memory");
+            Memory.processes = [];
+            for (var j = 1; j < 7; j++) {
+                this.spawnProcess(new Process(j, getRandomIntInclusive(0, 3)));
+            }
         }
         global._processes = this._processes;
         this.writeToMemory();
