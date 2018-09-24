@@ -16,7 +16,7 @@ var Scheduler = /** @class */ (function () {
         return this._instance;
     };
     Scheduler.prototype.spawnProcess = function (p) {
-        global._processes.push(p);
+        this._processes.push(p);
     };
     Scheduler.prototype.run = function () {
         var isRunningFor = 0;
@@ -116,12 +116,12 @@ function getRandomIntInclusive(min, max) {
 }
 // Programm Start
 var p = Scheduler.getInstance();
-//p.readFromMemory();
-p.run();
-p.sortByLastRun();
-p.setSleepTime();
-p.writeToMemory();
+
+p.run(); // Ausführen aller Prozesse
+p.sortByLastRun(); // 
+p.setSleepTime(); // Prozesse neu sortieren (nur zum Testen)
+p.writeToMemory(); // Prozesse zur Sicherheit in Memory schreiben. (Wenn global reset)
 console.log("---------------------------");
-p.toString();
+p.toString(); // Ausgabe der Prozesse
 console.log("Counter: " + numberProcessesRun + " NumberSleeps: " + numberSleeps);
 //# sourceMappingURL=main.js.map
