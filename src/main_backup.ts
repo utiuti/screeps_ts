@@ -24,15 +24,15 @@ class Scheduler {
     }
 
     public spawnProcess(p: Process) {
-        this._processes.push(p)
+        global._processes.push(p)
     }
 
     public run() {
         let isRunningFor = 0;
         let limit = Game.cpu.limit;
 
-        if (!this._processes) this.initialize();
-        this._processes.forEach(x => {
+        if (!global._processes) this.initialize();
+        global._processes.forEach(x => {
 
             if (x.sleep > 0) {
                 x.sleep -= 1;
@@ -64,16 +64,19 @@ class Scheduler {
                 this.spawnProcess(new Process(j, getRandomIntInclusive(0, 3)));
             }
         }
+        global._processes = this._processes;
+        this.writeToMemory();
+
     }
 
     public sortByLastRun() {
-        this._processes.sort(function (a, b) {
+        global._processes.sort(function (a, b) {
             return a.lastRun - b.lastRun;
         });
     }
 
     public sortByPriority() {
-        this._processes.sort(function (a, b) {
+        global._processes.sort(function (a, b) {
             return a.priority - b.priority;
         });
     }
@@ -83,7 +86,7 @@ class Scheduler {
     }
 
     public getRandomProcess() {
-        return this._processes[Math.floor(Math.random() * this._processes.length)]
+        return global._processes[Math.floor(Math.random() * this._processes.length)]
     }
 
     public readFromMemory() {
@@ -93,7 +96,7 @@ class Scheduler {
     }
 
     public writeToMemory() {
-        Memory.processes = this._processes;
+        Memory.processes = global._processes;
     }
 
     public toString() {
