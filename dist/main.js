@@ -34,16 +34,6 @@ var Scheduler = /** @class */ (function () {
             }
         });
     };
-    Scheduler.prototype.sortByLastRun = function () {
-        global._processes.sort(function (a, b) {
-            return a.lastRun - b.lastRun;
-        });
-    };
-    Scheduler.prototype.sortByPriority = function () {
-        global._processes.sort(function (a, b) {
-            return a.priority - b.priority;
-        });
-    };
     Scheduler.prototype.initialize = function () {
         if (Memory.processes) {
             console.log('<font color="' + "ffcc00" + '" type="highlight">' + "Get Processes from Memory" + "</font>");
@@ -60,6 +50,16 @@ var Scheduler = /** @class */ (function () {
         }
         global._processes = this._processes;
         this.writeToMemory();
+    };
+    Scheduler.prototype.sortByLastRun = function () {
+        global._processes.sort(function (a, b) {
+            return a.lastRun - b.lastRun;
+        });
+    };
+    Scheduler.prototype.sortByPriority = function () {
+        global._processes.sort(function (a, b) {
+            return a.priority - b.priority;
+        });
     };
     Scheduler.prototype.setSleepTime = function () {
         this.getRandomProcess().sleep = getRandomIntInclusive(0, 3);

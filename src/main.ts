@@ -48,17 +48,6 @@ class Scheduler {
         });
     }
 
-    public sortByLastRun() {
-        global._processes.sort(function (a, b) {
-            return a.lastRun - b.lastRun;
-        });
-    }
-
-    public sortByPriority() {
-        global._processes.sort(function (a, b) {
-            return a.priority - b.priority;
-        });
-    }
     public initialize() {
 
         if (Memory.processes) {
@@ -79,6 +68,19 @@ class Scheduler {
         this.writeToMemory();
 
     }
+
+    public sortByLastRun() {
+        global._processes.sort(function (a, b) {
+            return a.lastRun - b.lastRun;
+        });
+    }
+
+    public sortByPriority() {
+        global._processes.sort(function (a, b) {
+            return a.priority - b.priority;
+        });
+    }
+
     public setSleepTime() {
         this.getRandomProcess().sleep = getRandomIntInclusive(0, 3);
     }
