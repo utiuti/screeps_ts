@@ -15,14 +15,13 @@ var Scheduler = /** @class */ (function () {
     Scheduler.getInstance = function () {
         return this._instance;
     };
-    Scheduler.prototype.spawnProcess = function (p) {
-        this._processes.push(p);
-    };
     Scheduler.prototype.run = function () {
         var isRunningFor = 0;
         var limit = Game.cpu.limit;
-        if (!this._processes)
+        console.log("1-this._processes: " + this._processes);
+        if (!this._processes) {
             this.initialize();
+        }
         this._processes.forEach(function (x) {
             if (x.sleep > 0) {
                 x.sleep -= 1;
@@ -48,6 +47,9 @@ var Scheduler = /** @class */ (function () {
                 this.spawnProcess(new Process(j, getRandomIntInclusive(0, 3)));
             }
         }
+    };
+    Scheduler.prototype.spawnProcess = function (p) {
+        this._processes.push(p);
     };
     Scheduler.prototype.sortByLastRun = function () {
         this._processes.sort(function (a, b) {

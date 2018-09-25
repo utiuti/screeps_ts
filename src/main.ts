@@ -23,15 +23,11 @@ class Scheduler {
     private constructor() {
     }
 
-    public spawnProcess(p: Process) {
-        this._processes.push(p)
-    }
-
     public run() {
         let isRunningFor = 0;
         let limit = Game.cpu.limit;
-
-        if (!this._processes) this.initialize();
+        console.log("1-this._processes: " + this._processes);
+        if (!this._processes) { this.initialize(); }
         this._processes.forEach(x => {
 
             if (x.sleep > 0) {
@@ -49,13 +45,11 @@ class Scheduler {
     }
 
     public initialize() {
-
         if (Memory.processes) {
             console.log('<font color="' + "ffcc00" + '" type="highlight">' + "Get Processes from Memory" + "</font>");
             Memory.processes.forEach(function (x) {
                 this.spawnProcess(new Process(x.thePid, x.priority, x.theTask));
             });
-
         }
         else {
             console.log('<font color="' + "ffcc00" + '" type="highlight">' + "Initialise Processes + Memory" + "</font>");
@@ -64,6 +58,10 @@ class Scheduler {
                 this.spawnProcess(new Process(j, getRandomIntInclusive(0, 3)));
             }
         }
+    }
+
+    public spawnProcess(p: Process) {
+        this._processes.push(p)
     }
 
     public sortByLastRun() {
