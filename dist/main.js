@@ -11,6 +11,7 @@ var numberSleeps = 0;
 var Scheduler = /** @class */ (function () {
     function Scheduler() {
         this._processes = [];
+        _self = this;
     }
     Scheduler.getInstance = function () {
         return this._instance;
@@ -19,10 +20,10 @@ var Scheduler = /** @class */ (function () {
         var isRunningFor = 0;
         var limit = Game.cpu.limit;
         console.log("1-this._processes: " + this._processes);
-        if (!this._processes) {
+        if (!_self._processes) {
             this.initialize();
         }
-        this._processes.forEach(function (x) {
+        _self._processes.forEach(function (x) {
             if (x.sleep > 0) {
                 x.sleep -= 1;
                 numberSleeps += 1;
@@ -37,35 +38,35 @@ var Scheduler = /** @class */ (function () {
         if (Memory.processes) {
             console.log('<font color="' + "ffcc00" + '" type="highlight">' + "Get Processes from Memory" + "</font>");
             Memory.processes.forEach(function (x) {
-                this.spawnProcess(new Process(x.thePid, x.priority, x.theTask));
+                _self.spawnProcess(new Process(x.thePid, x.priority, x.theTask));
             });
         }
         else {
             console.log('<font color="' + "ffcc00" + '" type="highlight">' + "Initialise Processes + Memory" + "</font>");
             Memory.processes = [];
             for (var j = 1; j < 7; j++) {
-                this.spawnProcess(new Process(j, getRandomIntInclusive(0, 3)));
+                _self.spawnProcess(new Process(j, getRandomIntInclusive(0, 3)));
             }
         }
     };
     Scheduler.prototype.spawnProcess = function (p) {
-        this._processes.push(p);
+        _self._processes.push(p);
     };
     Scheduler.prototype.sortByLastRun = function () {
-        this._processes.sort(function (a, b) {
+        _self._processes.sort(function (a, b) {
             return a.lastRun - b.lastRun;
         });
     };
     Scheduler.prototype.sortByPriority = function () {
-        this._processes.sort(function (a, b) {
+        _self._processes.sort(function (a, b) {
             return a.priority - b.priority;
         });
     };
     Scheduler.prototype.setSleepTime = function () {
-        this.getRandomProcess().sleep = getRandomIntInclusive(0, 3);
+        _self.getRandomProcess().sleep = getRandomIntInclusive(0, 3);
     };
     Scheduler.prototype.getRandomProcess = function () {
-        return this._processes[Math.floor(Math.random() * this._processes.length)];
+        return _self._processes[Math.floor(Math.random() * this._processes.length)];
     };
     Scheduler.prototype.readFromMemory = function () {
         // console.log("Read Memory. Memory.process exists?: " + Memory.processes);
@@ -73,10 +74,10 @@ var Scheduler = /** @class */ (function () {
         // this._processes = Memory.processes;
     };
     Scheduler.prototype.writeToMemory = function () {
-        Memory.processes = this._processes;
+        Memory.processes = _self._processes;
     };
     Scheduler.prototype.toString = function () {
-        this._processes.forEach(function (x) {
+        _self._processes.forEach(function (x) {
             console.log("PID: " + ("     " + x.pid).slice(-5) + " Priority: " + x.priority + " Task: " + x.task + " lastRun: " + x.lastRun + " sleepTime: " + x.sleep);
         });
     };

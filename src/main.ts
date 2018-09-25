@@ -14,6 +14,8 @@ class Scheduler {
 
     private static _instance: Scheduler = new Scheduler();
 
+    private _self;
+
     public static getInstance(): Scheduler {
         return this._instance;
     }
@@ -21,14 +23,15 @@ class Scheduler {
     private _processes: Array<Process> = [];
 
     private constructor() {
+        _self = this;
     }
 
     public run() {
         let isRunningFor = 0;
         let limit = Game.cpu.limit;
         console.log("1-this._processes: " + this._processes);
-        if (!this._processes) { this.initialize(); }
-        this._processes.forEach(x => {
+        if (!_self._processes) { this.initialize(); }
+        _self._processes.forEach(x => {
 
             if (x.sleep > 0) {
                 x.sleep -= 1;
@@ -48,40 +51,40 @@ class Scheduler {
         if (Memory.processes) {
             console.log('<font color="' + "ffcc00" + '" type="highlight">' + "Get Processes from Memory" + "</font>");
             Memory.processes.forEach(function (x) {
-                this.spawnProcess(new Process(x.thePid, x.priority, x.theTask));
+                _self.spawnProcess(new Process(x.thePid, x.priority, x.theTask));
             });
         }
         else {
             console.log('<font color="' + "ffcc00" + '" type="highlight">' + "Initialise Processes + Memory" + "</font>");
             Memory.processes = [];
             for (var j = 1; j < 7; j++) {
-                this.spawnProcess(new Process(j, getRandomIntInclusive(0, 3)));
+                _self.spawnProcess(new Process(j, getRandomIntInclusive(0, 3)));
             }
         }
     }
 
     public spawnProcess(p: Process) {
-        this._processes.push(p)
+        _self._processes.push(p)
     }
 
     public sortByLastRun() {
-        this._processes.sort(function (a, b) {
+        _self._processes.sort(function (a, b) {
             return a.lastRun - b.lastRun;
         });
     }
 
     public sortByPriority() {
-        this._processes.sort(function (a, b) {
+        _self._processes.sort(function (a, b) {
             return a.priority - b.priority;
         });
     }
 
     public setSleepTime() {
-        this.getRandomProcess().sleep = getRandomIntInclusive(0, 3);
+        _self.getRandomProcess().sleep = getRandomIntInclusive(0, 3);
     }
 
     public getRandomProcess() {
-        return this._processes[Math.floor(Math.random() * this._processes.length)]
+        return _self._processes[Math.floor(Math.random() * this._processes.length)]
     }
 
     public readFromMemory() {
@@ -91,11 +94,11 @@ class Scheduler {
     }
 
     public writeToMemory() {
-        Memory.processes = this._processes;
+        Memory.processes = _self._processes;
     }
 
     public toString() {
-        this._processes.forEach(x => {
+        _self._processes.forEach(x => {
             console.log(`PID: ${("     " + x.pid).slice(-5)} Priority: ${x.priority} Task: ${x.task} lastRun: ${x.lastRun} sleepTime: ${x.sleep}`);
         })
     }
