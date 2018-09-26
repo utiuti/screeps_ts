@@ -19,8 +19,7 @@ var Scheduler = /** @class */ (function () {
     Scheduler.prototype.run = function () {
         var isRunningFor = 0;
         var limit = Game.cpu.limit;
-        console.log("1-this._processes: " + this._processes);
-        if (!_self._processes) {
+        if (_self._processes.length == 0) {
             this.initialize();
         }
         _self._processes.forEach(function (x) {
@@ -38,7 +37,7 @@ var Scheduler = /** @class */ (function () {
         if (Memory.processes) {
             console.log('<font color="' + "ffcc00" + '" type="highlight">' + "Get Processes from Memory" + "</font>");
             Memory.processes.forEach(function (x) {
-                _self.spawnProcess(new Process(x.thePid, x.priority, x.theTask));
+                _self.spawnProcess(new Process(x.thePid, x.priority, x.theTask, x.theLastRun));
             });
         }
         else {
@@ -85,15 +84,17 @@ var Scheduler = /** @class */ (function () {
     return Scheduler;
 }());
 var Process = /** @class */ (function () {
-    function Process(thePid, priority, theTask) {
+    function Process(thePid, priority, theTask, theLastRun) {
         if (priority === void 0) { priority = Priority.Middle; }
         if (theTask === void 0) { theTask = "Task" + getRandomIntInclusive(100, 999); }
+        if (theLastRun === void 0) { theLastRun = 0; }
         this.thePid = thePid;
         this.priority = priority;
         this.theTask = theTask;
+        this.theLastRun = theLastRun;
         this.pid = thePid;
         this.task = theTask;
-        this.lastRun = 0;
+        this.lastRun = theLastRun;
         this.sleep = 0;
     }
     Process.prototype.run = function () {
@@ -120,7 +121,7 @@ var p = Scheduler.getInstance();
 //p.readFromMemory();
 p.run();
 p.sortByLastRun();
-p.setSleepTime();
+//p.setSleepTime();
 p.writeToMemory();
 console.log("---------------------------");
 p.toString();

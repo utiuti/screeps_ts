@@ -1,4 +1,5 @@
 declare var global: any;
+declare var _self: any;
 
 enum Priority {
     VeryHigh = 4,
@@ -29,8 +30,7 @@ class Scheduler {
     public run() {
         let isRunningFor = 0;
         let limit = Game.cpu.limit;
-        console.log("1-this._processes: " + this._processes);
-        if (!_self._processes) { this.initialize(); }
+        if (_self._processes.length == 0) { this.initialize(); }
         _self._processes.forEach(x => {
 
             if (x.sleep > 0) {
@@ -51,7 +51,7 @@ class Scheduler {
         if (Memory.processes) {
             console.log('<font color="' + "ffcc00" + '" type="highlight">' + "Get Processes from Memory" + "</font>");
             Memory.processes.forEach(function (x) {
-                _self.spawnProcess(new Process(x.thePid, x.priority, x.theTask));
+                _self.spawnProcess(new Process(x.thePid, x.priority, x.theTask, x.theLastRun));
             });
         }
         else {
@@ -114,11 +114,12 @@ class Process {
     constructor(
         public thePid: number,
         public priority: Priority = Priority.Middle,
-        public theTask: string = "Task" + getRandomIntInclusive(100, 999)
+        public theTask: string = "Task" + getRandomIntInclusive(100, 999),
+        public theLastRun: number = 0
     ) {
         this.pid = thePid;
         this.task = theTask;
-        this.lastRun = 0;
+        this.lastRun = theLastRun;
         this.sleep = 0;
     }
     run() {
@@ -148,7 +149,7 @@ let p = Scheduler.getInstance();
 //p.readFromMemory();
 p.run();
 p.sortByLastRun();
-p.setSleepTime();
+//p.setSleepTime();
 p.writeToMemory();
 
 console.log("---------------------------");
