@@ -37,7 +37,7 @@ var Scheduler = /** @class */ (function () {
         if (Memory.processes) {
             console.log('<font color="' + "ffcc00" + '" type="highlight">' + "Get Processes from Memory" + "</font>");
             Memory.processes.forEach(function (x) {
-                _self.spawnProcess(new Process(x.thePid, x.priority, x.theTask, x.theLastRun));
+                _self.spawnProcess(new Process(x.thePid, x.priority, x.theTask, x.lastRun));
             });
         }
         else {
