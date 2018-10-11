@@ -118,6 +118,21 @@ Room.prototype._checkRoomCache = function _checkRoomCache() {
     }
 }
 
+/* Object.defineProperty(Room.prototype, 'checkRoomCache', {
+    get function() {
+        // if cache is expired or doesn't exist
+        if (!roomStructuresExpiration[this.name] || !roomStructures[this.name] || roomStructuresExpiration[this.name] < Game.time) {
+            roomStructuresExpiration[this.name] = Game.time + getCacheExpiration();
+            roomStructures[this.name] = _.groupBy(this.find(FIND_STRUCTURES), s => s.structureType);
+            var i;
+            for (i in roomStructures[this.name]) {
+                roomStructures[this.name][i] = _.map(roomStructures[this.name][i], s => s.id);
+            }
+        }
+    }
+}
+), */
+
 multipleList.forEach(function (type) {
     Object.defineProperty(Room.prototype, type + 's', {
         get: function () {
